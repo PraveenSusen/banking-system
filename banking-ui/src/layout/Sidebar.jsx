@@ -1,5 +1,12 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, ArrowDownCircle, ArrowUpCircle, Repeat, List } from "lucide-react";
+import { 
+  LayoutDashboard, 
+  ArrowDownCircle, 
+  ArrowUpCircle, 
+  Repeat, 
+  List,
+  Landmark   // 👈 NEW ICON
+} from "lucide-react";
 
 export default function Sidebar() {
   return (
@@ -12,7 +19,7 @@ export default function Sidebar() {
       <nav className="flex flex-col gap-4">
 
         <NavLink
-          to="/"
+          to="/dashboard"
           className={({ isActive }) =>
             `flex items-center gap-3 p-3 rounded-xl transition ${
               isActive
@@ -65,6 +72,21 @@ export default function Sidebar() {
         >
           <List size={20} />
           Transactions
+        </NavLink>
+
+        {/* 🔥 NEW: Loans */}
+        <NavLink
+          to="/loans"
+          className={({ isActive }) =>
+            `flex items-center gap-3 p-3 rounded-xl transition ${
+              isActive
+                ? "bg-pink-600"
+                : "hover:bg-slate-800 text-slate-300"
+            }`
+          }
+        >
+          <Landmark size={20} />
+          Loans
         </NavLink>
 
       </nav>

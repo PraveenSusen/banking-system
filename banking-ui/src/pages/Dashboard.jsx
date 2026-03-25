@@ -87,6 +87,13 @@ export default function Dashboard() {
           <Repeat className="text-purple-600" size={28} />
           <span className="font-semibold">Transfer</span>
         </button>
+        <button
+  onClick={() => navigate("/loans")}
+  className="bg-white p-8 rounded-2xl shadow hover:shadow-2xl transition flex flex-col items-center gap-3"
+>
+  💸
+  <span className="font-semibold">Loans</span>
+</button>
 
       </div>
 

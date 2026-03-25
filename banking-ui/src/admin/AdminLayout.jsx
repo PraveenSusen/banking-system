@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, Users, LogOut, ArrowLeft } from "lucide-react";
+import { LayoutDashboard, Users, LogOut, ArrowLeft, FileText } from "lucide-react";
 
 export default function AdminLayout({ children }) {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.replace("/login"); // ✅ No white screen
+    window.location.replace("/login");
   };
 
   return (
@@ -37,23 +37,35 @@ export default function AdminLayout({ children }) {
               Users
             </NavLink>
 
-            
-            <NavLink to="/admin/accounts" className="block hover:text-gray-300">
-  Accounts
-</NavLink>
+            <NavLink
+              to="/admin/accounts"
+              className="flex items-center gap-3 hover:text-gray-300"
+            >
+              Accounts
+            </NavLink>
 
-<NavLink to="/admin/transactions" className="block hover:text-gray-300">
-  Transactions
-</NavLink>
+            <NavLink
+              to="/admin/transactions"
+              className="flex items-center gap-3 hover:text-gray-300"
+            >
+              Transactions
+            </NavLink>
+
+            {/* 🔥 NEW: Loans Section */}
+            <NavLink
+              to="/admin/loans"
+              className="flex items-center gap-3 hover:text-gray-300"
+            >
+              <FileText size={20} />
+              Loans
+            </NavLink>
 
           </nav>
-          
         </div>
 
         {/* Bottom Section */}
         <div className="space-y-4">
 
-          {/* Back to Main App */}
           <NavLink
             to="/dashboard"
             className="flex items-center gap-3 hover:text-gray-300"
@@ -62,7 +74,6 @@ export default function AdminLayout({ children }) {
             Back to Banking
           </NavLink>
 
-          {/* Logout */}
           <button
             onClick={handleLogout}
             className="flex items-center gap-3 text-red-400 hover:text-red-600"

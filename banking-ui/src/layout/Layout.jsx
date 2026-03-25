@@ -1,17 +1,25 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, ArrowDownCircle, ArrowUpCircle, Repeat, History, LogOut, Shield } from "lucide-react";
+import {
+  LayoutDashboard,
+  ArrowDownCircle,
+  ArrowUpCircle,
+  Repeat,
+  History,
+  LogOut,
+  Shield,
+  Landmark   // ✅ NEW ICON
+} from "lucide-react";
+
 import { getUserRole } from "../utils/decodeToken";
 
 export default function Layout({ children }) {
 
   const role = getUserRole();
 
-  
-  
   const handleLogout = () => {
-  localStorage.removeItem("token");
-  window.location.replace("/login");
-};
+    localStorage.removeItem("token");
+    window.location.replace("/login");
+  };
 
   return (
     <div className="flex min-h-screen bg-slate-100">
@@ -26,7 +34,8 @@ export default function Layout({ children }) {
 
           <nav className="space-y-4">
 
-            <NavLink to="/" className="flex items-center gap-3 hover:text-blue-600">
+            {/* ✅ FIXED */}
+            <NavLink to="/dashboard" className="flex items-center gap-3 hover:text-blue-600">
               <LayoutDashboard size={20} />
               Dashboard
             </NavLink>
@@ -51,7 +60,13 @@ export default function Layout({ children }) {
               Transactions
             </NavLink>
 
-            {/* 👑 ADMIN LINK (Only visible for ADMIN) */}
+            {/* 🔥 NEW: Loans */}
+            <NavLink to="/loans" className="flex items-center gap-3 hover:text-pink-600">
+              <Landmark size={20} />
+              Loans
+            </NavLink>
+
+            {/* 👑 ADMIN LINK */}
             {role === "ADMIN" && (
               <NavLink to="/admin" className="flex items-center gap-3 hover:text-yellow-600">
                 <Shield size={20} />
@@ -62,7 +77,7 @@ export default function Layout({ children }) {
           </nav>
         </div>
 
-        {/* Logout Button */}
+        {/* Logout */}
         <button
           onClick={handleLogout}
           className="flex items-center gap-3 text-red-600 hover:text-red-800 mt-10"
@@ -73,7 +88,7 @@ export default function Layout({ children }) {
 
       </div>
 
-      {/* Main Content */}
+      {/* Content */}
       <div className="flex-1 p-10">
         {children}
       </div>

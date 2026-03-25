@@ -8,6 +8,7 @@ import Withdraw from "./pages/Withdraw";
 import Transfer from "./pages/Transfer";
 import Transactions from "./pages/Transactions";
 import CreateAccount from "./pages/CreateAccount";
+import Loans from "./pages/Loans";
 
 import Layout from "./layout/Layout";
 
@@ -16,15 +17,16 @@ import AdminDashboard from "./admin/AdminDashboard";
 import Users from "./admin/Users";
 import Accounts from "./admin/Accounts";
 import AdminTransactions from "./admin/Transactions";
+import AdminLoans from "./admin/AdminLoans";
 
 import { getUserRole } from "./utils/decodeToken";
 
 
-// 🔐 Private Route
+// 🔐 Private Route (FIXED)
 function PrivateRoute({ children }) {
   const token = localStorage.getItem("token");
 
-  if (!token) {
+  if (!token || token === "null" || token === "undefined") {
     return <Navigate to="/login" replace />;
   }
 
@@ -32,11 +34,12 @@ function PrivateRoute({ children }) {
 }
 
 
-// 🔐 Admin Route
+// 🔐 Admin Route (FIXED 🔥)
 function AdminRoute({ children }) {
   const role = getUserRole();
 
-  if (role !== "ADMIN") {
+  // Only block if role exists AND not ADMIN
+  if (role && role !== "ADMIN") {
     return <Navigate to="/dashboard" replace />;
   }
 
@@ -49,7 +52,7 @@ export default function App() {
     <Router>
       <Routes>
 
-        {/* Public Routes */}
+        {/* Public */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
@@ -60,6 +63,17 @@ export default function App() {
             <PrivateRoute>
               <Layout>
                 <Dashboard />
+              </Layout>
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/loans"
+          element={
+            <PrivateRoute>
+              <Layout>
+                <Loans />
               </Layout>
             </PrivateRoute>
           }
@@ -173,7 +187,20 @@ export default function App() {
           }
         />
 
-        {/* Default fallback */}
+        <Route
+          path="/admin/loans"
+          element={
+            <PrivateRoute>
+              <AdminRoute>
+                <AdminLayout>
+                  <AdminLoans />
+                </AdminLayout>
+              </AdminRoute>
+            </PrivateRoute>
+          }
+        />
+
+        {/* DEFAULT */}
         <Route
           path="*"
           element={
